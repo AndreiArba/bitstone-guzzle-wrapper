@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": ">=5.3.0",
-    "guzzlehttp/guzzle": "4.*",
+    "guzzlehttp/guzzle": "~6.0",
     "illuminate/support": "~4.0"
   },
   "require-dev": {
@@ -23,8 +23,8 @@
     "mockery/mockery": "0.9"
   },
   "autoload": {
-    "psr-0": {
-      "Bitstone\\GuzzleWrapper": "src/"
+    "psr-4": {
+      "Bitstone\\GuzzleWrapper\\": "src/"
     }
   }
 }
