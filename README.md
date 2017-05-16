@@ -19,13 +19,13 @@ add the library to your composer.json file:
 Then you need to update the service providers array, in your config/app.php
 
 ```php
-'Bitstone\\GuzzleWrapper\\HttpServiceProvider'
+Bitstone\GuzzleWrapper\HttpServiceProvider::class
 ```
 
 And the alias for the facade
 
 ```php
-'Http' => 'Bitstone\\GuzzleWrapper\\Dispatcher'
+'Http' => Bitstone\GuzzleWrapper\Dispatcher::class
 ```
 
 ## Usage
