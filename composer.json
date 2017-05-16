@@ -1,10 +1,12 @@
 {
   "name": "bitstone/guzzle-wrapper",
-  "description": "A wrapper around the Guzzle Client API.",
+  "description": "A laravel wrapper around the Guzzle Client API.",
   "keywords": [
     "http",
     "request",
-    "laravel"
+    "laravel",
+    "guzzle",
+    "wrapper"
   ],
   "license": "MIT",
   "authors": [
