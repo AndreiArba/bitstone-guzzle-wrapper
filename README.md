@@ -25,7 +25,7 @@ Bitstone\GuzzleWrapper\HttpServiceProvider::class
 And the alias for the facade
 
 ```php
-'Http' => Bitstone\GuzzleWrapper\Dispatcher::class
+'Http' => Bitstone\GuzzleWrapper\Http::class
 ```
 
 ## Usage
