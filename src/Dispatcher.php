@@ -34,6 +34,8 @@ class Dispatcher
     public function request($type, $url, $options = [], $headers = [])
     {
         try {
+            $this->data = [];
+
             $client = new GuzzleClient();
 
             $this->prepareHeaders($headers);

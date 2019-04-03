@@ -13,7 +13,7 @@ or
 
 add the library to your composer.json file:
 
-"bitstone/guzzle-wrapper": "~1.0"
+"bitstone/guzzle-wrapper": "^1.4"
 ```
 
 Then you need to update the service providers array, in your config/app.php
