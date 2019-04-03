@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Bitstone\GuzzleWrapper\Dispatcher;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends \PHPUnit\Framework\TestCase
 {
     protected $testUrl;
     protected $http;
@@ -15,6 +15,51 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->http = new Dispatcher();
         parent::setUp();
     }
+
+    /**
+     * Checking the get request adds the correct data
+     */
+    public function testGetDataByHeader()
+    {
+        $this->http->setDataByHeaderType('GET', ['test' => 'test input']);
+
+        $data = $this->http->getData();
+
+        $this->assertTrue(isset($data['query']));
+        $this->assertFalse(isset($data['json']));
+        $this->assertFalse(isset($data['form_params']));
+    }
+
+    /**
+     * Checking the post request adds the correct data when no headers are passed
+     */
+    public function testPostDataByHeader()
+    {
+        $this->http->prepareHeaders([]);
+        $this->http->setDataByHeaderType('POST', ['test' => 'test input']);
+
+        $data = $this->http->getData();
+
+        $this->assertFalse(isset($data['query']));
+        $this->assertTrue(isset($data['json']));
+        $this->assertFalse(isset($data['form_params']));
+    }
+
+    /**
+     * Checking the post request adds the correct data when x-www-form-urlencoded header is passed
+     */
+    public function testPostDataByCustomHeader()
+    {
+        $this->http->prepareHeaders(['Content-Type' => 'application/x-www-form-urlencoded']);
+        $this->http->setDataByHeaderType('POST', ['test' => 'test input']);
+
+        $data = $this->http->getData();
+
+        $this->assertFalse(isset($data['query']));
+        $this->assertFalse(isset($data['json']));
+        $this->assertTrue(isset($data['form_params']));
+    }
+
     /**
      * Testing that the results exists.
      *
