@@ -48,9 +48,9 @@ class Dispatcher
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
-            $this->checkStatusCode($e->getCode(), $e->getMessage(), $e->getTraceAsString());
+            $this->checkStatusCode($e->getCode(), $e->getMessage(), $e->getTraceAsString(), $e->getResponse());
         } catch (Exception $e) {
-            throw new HttpException(500, $e->getMessage(), $e->getTraceAsString());
+            throw new HttpException(500, $e->getMessage(), $e->getTraceAsString(), $e->getResponse());
         }
     }
 
@@ -126,26 +126,26 @@ class Dispatcher
      * @throws ServerException
      */
 
-    protected function checkStatusCode($code, $message = '', $stackTrace = '')
+    protected function checkStatusCode($code, $message = '', $stackTrace = '', $clientResponse = null)
     {
         //Status code 5**
         if ($this->isServerError($code)){
-            throw new ServerException($code, $message, $stackTrace);
+            throw new ServerException($code, $message, $stackTrace, $clientResponse);
         }
 
         //Status code 4**
         if ($this->isClientError($code)){
-            throw new ClientException($code, $message, $stackTrace);
+            throw new ClientException($code, $message, $stackTrace, $clientResponse);
         }
 
         //Status code 3**
         if ($this->isRedirect($code)){
-            throw new RedirectException($code, $message, $stackTrace);
+            throw new RedirectException($code, $message, $stackTrace, $clientResponse);
         }
 
         //Status code 1**
         if ($this->isInformational($code)){
-            throw new InformationalException($code, $message, $stackTrace);
+            throw new InformationalException($code, $message, $stackTrace, $clientResponse);
         }
     }
 
@@ -215,6 +215,6 @@ class Dispatcher
             return $this->request($function, $args[0], $args[1], $args[2]);
         }
 
-        throw new HttpException(500);
+        throw new HttpException(400);
     }
 }
