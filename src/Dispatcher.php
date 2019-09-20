@@ -40,7 +40,7 @@ class Dispatcher
 
             $this->prepareHeaders($headers);
 
-            $this->setDataByHeaderType($type, $options);
+            $this->setDataByHeaderType($type, $options, $url);
 
             $response = $client->request($type, $url, $this->data);
 
@@ -59,8 +59,9 @@ class Dispatcher
      * For application/x-www-form-urlencoded or any other non-json header data needs to stay in form_params
      * @param $type
      * @param $options
+     * @param $url
      */
-    public function setDataByHeaderType($type, $options)
+    public function setDataByHeaderType($type, $options, $url = null)
     {
         if (isset($this->data['headers'])) {
             $headers = $this->data['headers'];
@@ -71,7 +72,14 @@ class Dispatcher
         $method = strtoupper($type);
 
         if ($method == 'GET') {
-            $this->data['query'] = $options;
+            $query = [];
+
+            if ($url) {
+                $queryString = strstr($url, '?');
+                parse_str(substr($queryString, 1), $query);
+            }
+
+            $this->data['query'] = $options ?: $query;
         } else {
             //TODO - handle multipart as well
             if ($headers['Content-Type'] === 'application/json') {
