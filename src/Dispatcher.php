@@ -79,7 +79,7 @@ class Dispatcher
                 parse_str(substr($queryString, 1), $query);
             }
 
-            $this->data['query'] = $options ?: $query;
+            $this->data['query'] = $options ? array_merge($options, $query) : $query;
         } else {
             //TODO - handle multipart as well
             if ($headers['Content-Type'] === 'application/json') {
